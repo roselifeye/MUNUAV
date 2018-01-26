@@ -7,18 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B98A8B220151D1900510F29 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A8B120151D1900510F29 /* AppDelegate.m */; };
+		63070C46C884128775906908 /* libPods-MUNUAVNew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD5FC0EAF03A59377B46D80 /* libPods-MUNUAVNew.a */; };
+		8B98A8B220151D1900510F29 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A8B120151D1900510F29 /* AppDelegate.mm */; };
 		8B98A8B520151D1900510F29 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A8B420151D1900510F29 /* ViewController.m */; };
 		8B98A8B820151D1900510F29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B98A8B620151D1900510F29 /* Main.storyboard */; };
 		8B98A8BA20151D1900510F29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B98A8B920151D1900510F29 /* Assets.xcassets */; };
 		8B98A8BD20151D1900510F29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B98A8BB20151D1900510F29 /* LaunchScreen.storyboard */; };
 		8B98A8C020151D1900510F29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A8BF20151D1900510F29 /* main.m */; };
+		8B98A8C72015216600510F29 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8C62015216600510F29 /* libz.tbd */; };
+		8B98A8C92015216D00510F29 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8C82015216D00510F29 /* libstdc++.6.0.9.tbd */; };
+		8B98A8CB2015218800510F29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8CA2015218800510F29 /* CoreGraphics.framework */; };
+		8B98A8CD2015218F00510F29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8CC2015218E00510F29 /* AssetsLibrary.framework */; };
+		8B98A8D82015246500510F29 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8D62015246500510F29 /* libiconv.tbd */; };
+		8B98A8F820152A9600510F29 /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8F7201527EF00510F29 /* VideoPreviewer.framework */; };
+		8B98A8F920152A9600510F29 /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B98A8F7201527EF00510F29 /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B98A90320153FCD00510F29 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A8FD20153FCB00510F29 /* ImageProcessing.mm */; };
+		8B98A90420153FCD00510F29 /* OpenCVConversion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A8FF20153FCB00510F29 /* OpenCVConversion.mm */; };
+		8B98A90520153FCD00510F29 /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B98A90220153FCC00510F29 /* UIImage+Additions.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8B98A8F6201527EF00510F29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B98A8F2201527EF00510F29 /* VideoPreviewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 02A543FD1C3C51CB0083C11B;
+			remoteInfo = VideoPreviewer;
+		};
+		8B98A8FA20152A9600510F29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B98A8F2201527EF00510F29 /* VideoPreviewer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 02A543FC1C3C51CB0083C11B;
+			remoteInfo = VideoPreviewer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8B98A8F1201526C700510F29 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8B98A8F920152A9600510F29 /* VideoPreviewer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		20522D6F53C4CFC82B50F2DB /* Pods-MUNUAVNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUNUAVNew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MUNUAVNew/Pods-MUNUAVNew.debug.xcconfig"; sourceTree = "<group>"; };
+		39FBFF2BD084711A33E151FD /* Pods-MUNUAVNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUNUAVNew.release.xcconfig"; path = "Pods/Target Support Files/Pods-MUNUAVNew/Pods-MUNUAVNew.release.xcconfig"; sourceTree = "<group>"; };
+		7FD5FC0EAF03A59377B46D80 /* libPods-MUNUAVNew.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MUNUAVNew.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B98A8AD20151D1900510F29 /* MUNUAVNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MUNUAVNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B98A8B020151D1900510F29 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		8B98A8B120151D1900510F29 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8B98A8B120151D1900510F29 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		8B98A8B320151D1900510F29 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8B98A8B420151D1900510F29 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8B98A8B720151D1900510F29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -26,6 +71,20 @@
 		8B98A8BC20151D1900510F29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B98A8BE20151D1900510F29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B98A8BF20151D1900510F29 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8B98A8C62015216600510F29 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		8B98A8C82015216D00510F29 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		8B98A8CA2015218800510F29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8B98A8CC2015218E00510F29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		8B98A8D62015246500510F29 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		8B98A8DB2015253600510F29 /* MUNUAVNew.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MUNUAVNew.entitlements; sourceTree = "<group>"; };
+		8B98A8F2201527EF00510F29 /* VideoPreviewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoPreviewer.xcodeproj; path = VideoPreviewer/VideoPreviewer.xcodeproj; sourceTree = "<group>"; };
+		8B98A8FD20153FCB00510F29 /* ImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessing.mm; sourceTree = "<group>"; };
+		8B98A8FE20153FCB00510F29 /* UIImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
+		8B98A8FF20153FCB00510F29 /* OpenCVConversion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVConversion.mm; sourceTree = "<group>"; };
+		8B98A90020153FCC00510F29 /* OpenCVConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVConversion.h; sourceTree = "<group>"; };
+		8B98A90120153FCC00510F29 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
+		8B98A90220153FCC00510F29 /* UIImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
+		8B98A906201540E800510F29 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +92,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B98A8D82015246500510F29 /* libiconv.tbd in Frameworks */,
+				8B98A8CD2015218F00510F29 /* AssetsLibrary.framework in Frameworks */,
+				8B98A8CB2015218800510F29 /* CoreGraphics.framework in Frameworks */,
+				8B98A8C92015216D00510F29 /* libstdc++.6.0.9.tbd in Frameworks */,
+				8B98A8C72015216600510F29 /* libz.tbd in Frameworks */,
+				63070C46C884128775906908 /* libPods-MUNUAVNew.a in Frameworks */,
+				8B98A8F820152A9600510F29 /* VideoPreviewer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +110,8 @@
 			children = (
 				8B98A8AF20151D1900510F29 /* MUNUAVNew */,
 				8B98A8AE20151D1900510F29 /* Products */,
+				FF57B2AA2C41276A0E4E3FFE /* Pods */,
+				E099EA2A4DCA63E9967EDCB8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,17 +126,56 @@
 		8B98A8AF20151D1900510F29 /* MUNUAVNew */ = {
 			isa = PBXGroup;
 			children = (
+				8B98A8DB2015253600510F29 /* MUNUAVNew.entitlements */,
 				8B98A8B020151D1900510F29 /* AppDelegate.h */,
-				8B98A8B120151D1900510F29 /* AppDelegate.m */,
+				8B98A8B120151D1900510F29 /* AppDelegate.mm */,
 				8B98A8B320151D1900510F29 /* ViewController.h */,
 				8B98A8B420151D1900510F29 /* ViewController.m */,
+				8B98A90120153FCC00510F29 /* ImageProcessing.h */,
+				8B98A8FD20153FCB00510F29 /* ImageProcessing.mm */,
+				8B98A90020153FCC00510F29 /* OpenCVConversion.h */,
+				8B98A8FF20153FCB00510F29 /* OpenCVConversion.mm */,
+				8B98A8FE20153FCB00510F29 /* UIImage+Additions.h */,
+				8B98A90220153FCC00510F29 /* UIImage+Additions.m */,
 				8B98A8B620151D1900510F29 /* Main.storyboard */,
 				8B98A8B920151D1900510F29 /* Assets.xcassets */,
 				8B98A8BB20151D1900510F29 /* LaunchScreen.storyboard */,
+				8B98A906201540E800510F29 /* PrefixHeader.pch */,
 				8B98A8BE20151D1900510F29 /* Info.plist */,
 				8B98A8BF20151D1900510F29 /* main.m */,
 			);
 			path = MUNUAVNew;
+			sourceTree = "<group>";
+		};
+		8B98A8F3201527EF00510F29 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8B98A8F7201527EF00510F29 /* VideoPreviewer.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E099EA2A4DCA63E9967EDCB8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8B98A8F2201527EF00510F29 /* VideoPreviewer.xcodeproj */,
+				8B98A8D62015246500510F29 /* libiconv.tbd */,
+				8B98A8C82015216D00510F29 /* libstdc++.6.0.9.tbd */,
+				8B98A8C62015216600510F29 /* libz.tbd */,
+				8B98A8CC2015218E00510F29 /* AssetsLibrary.framework */,
+				8B98A8CA2015218800510F29 /* CoreGraphics.framework */,
+				7FD5FC0EAF03A59377B46D80 /* libPods-MUNUAVNew.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF57B2AA2C41276A0E4E3FFE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				20522D6F53C4CFC82B50F2DB /* Pods-MUNUAVNew.debug.xcconfig */,
+				39FBFF2BD084711A33E151FD /* Pods-MUNUAVNew.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,13 +185,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B98A8C320151D1900510F29 /* Build configuration list for PBXNativeTarget "MUNUAVNew" */;
 			buildPhases = (
+				E96127A98988D2B9E2FAD910 /* [CP] Check Pods Manifest.lock */,
 				8B98A8A920151D1900510F29 /* Sources */,
 				8B98A8AA20151D1900510F29 /* Frameworks */,
 				8B98A8AB20151D1900510F29 /* Resources */,
+				FD961E9E8885388EA5AD50A6 /* [CP] Embed Pods Frameworks */,
+				6FCEB11BE284B72939A789E0 /* [CP] Copy Pods Resources */,
+				8B98A8F1201526C700510F29 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8B98A8FB20152A9600510F29 /* PBXTargetDependency */,
 			);
 			name = MUNUAVNew;
 			productName = MUNUAVNew;
@@ -103,6 +215,11 @@
 					8B98A8AC20151D1900510F29 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -117,12 +234,28 @@
 			mainGroup = 8B98A8A420151D1900510F29;
 			productRefGroup = 8B98A8AE20151D1900510F29 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8B98A8F3201527EF00510F29 /* Products */;
+					ProjectRef = 8B98A8F2201527EF00510F29 /* VideoPreviewer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8B98A8AC20151D1900510F29 /* MUNUAVNew */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8B98A8F7201527EF00510F29 /* VideoPreviewer.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VideoPreviewer.framework;
+			remoteRef = 8B98A8F6201527EF00510F29 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8B98A8AB20151D1900510F29 /* Resources */ = {
@@ -137,18 +270,83 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6FCEB11BE284B72939A789E0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MUNUAVNew/Pods-MUNUAVNew-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E96127A98988D2B9E2FAD910 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MUNUAVNew-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD961E9E8885388EA5AD50A6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MUNUAVNew/Pods-MUNUAVNew-frameworks.sh",
+				"${PODS_ROOT}/DJI-SDK-iOS/iOS_Mobile_SDK/DJISDK.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJISDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MUNUAVNew/Pods-MUNUAVNew-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8B98A8A920151D1900510F29 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8B98A8B520151D1900510F29 /* ViewController.m in Sources */,
+				8B98A90520153FCD00510F29 /* UIImage+Additions.m in Sources */,
 				8B98A8C020151D1900510F29 /* main.m in Sources */,
-				8B98A8B220151D1900510F29 /* AppDelegate.m in Sources */,
+				8B98A90320153FCD00510F29 /* ImageProcessing.mm in Sources */,
+				8B98A90420153FCD00510F29 /* OpenCVConversion.mm in Sources */,
+				8B98A8B220151D1900510F29 /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8B98A8FB20152A9600510F29 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VideoPreviewer;
+			targetProxy = 8B98A8FA20152A9600510F29 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8B98A8B620151D1900510F29 /* Main.storyboard */ = {
@@ -276,10 +474,13 @@
 		};
 		8B98A8C420151D1900510F29 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20522D6F53C4CFC82B50F2DB /* Pods-MUNUAVNew.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UH7E7796RB;
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/MUNUAVNew/PrefixHeader.pch";
 				INFOPLIST_FILE = MUNUAVNew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vclab.MUNUAVNew;
@@ -290,10 +491,13 @@
 		};
 		8B98A8C520151D1900510F29 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39FBFF2BD084711A33E151FD /* Pods-MUNUAVNew.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UH7E7796RB;
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/MUNUAVNew/PrefixHeader.pch";
 				INFOPLIST_FILE = MUNUAVNew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vclab.MUNUAVNew;

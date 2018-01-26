@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <DJISDK/DJISDK.h>
 
 @interface AppDelegate ()
 

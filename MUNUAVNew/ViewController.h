@@ -10,9 +10,10 @@
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UIView *fpvPreviewView;
-@property (nonatomic, strong) IBOutlet UIButton *photoBtn;
-@property (nonatomic, strong) IBOutlet UIButton *wayMissionBtn;
+@property (nonatomic, weak) IBOutlet UIView *fpvPreviewView;
+@property (nonatomic, weak) IBOutlet UIButton *photoBtn;
+@property (nonatomic, weak) IBOutlet UIButton *wayMissionBtn;
+@property (nonatomic, weak) IBOutlet UIButton *rotateGimbalBtn;
 
 
 @end

@@ -64,15 +64,28 @@
                                     <action selector="wayMissionBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pVL-zb-sM0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb9-0l-la5">
+                                <rect key="frame" x="463" y="77" width="110" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Bv2-nH-z2P"/>
+                                    <constraint firstAttribute="width" constant="110" id="WPG-hW-Riv"/>
+                                </constraints>
+                                <state key="normal" title="Rotate Gimbal"/>
+                                <connections>
+                                    <action selector="rotateGimBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Yb-mq-i6L"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="trN-yr-tls" secondAttribute="bottom" constant="20" id="9EC-Y6-R2K"/>
                             <constraint firstItem="trN-yr-tls" firstAttribute="leading" secondItem="e3z-6o-XIG" secondAttribute="leading" id="BIV-w2-U7F"/>
                             <constraint firstItem="trN-yr-tls" firstAttribute="top" secondItem="kHU-uw-gNe" secondAttribute="bottom" constant="8" id="HHT-RE-8Bh"/>
+                            <constraint firstItem="Fb9-0l-la5" firstAttribute="trailing" secondItem="trN-yr-tls" secondAttribute="trailing" id="Rc3-30-F3c"/>
                             <constraint firstItem="trN-yr-tls" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Y29-5a-k14"/>
                             <constraint firstItem="kHU-uw-gNe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hHM-99-XRY"/>
                             <constraint firstItem="trN-yr-tls" firstAttribute="top" secondItem="e3z-6o-XIG" secondAttribute="bottom" constant="8" id="iRI-uW-Goj"/>
+                            <constraint firstItem="Fb9-0l-la5" firstAttribute="top" secondItem="kHU-uw-gNe" secondAttribute="top" id="z4f-rw-WAP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -80,6 +93,7 @@
                     <connections>
                         <outlet property="fpvPreviewView" destination="trN-yr-tls" id="UD0-wt-om2"/>
                         <outlet property="photoBtn" destination="e3z-6o-XIG" id="Hjn-Xf-zo9"/>
+                        <outlet property="rotateGimbalBtn" destination="Fb9-0l-la5" id="1Kj-Vi-3k7"/>
                         <outlet property="wayMissionBtn" destination="kHU-uw-gNe" id="fdh-IY-5r8"/>
                     </connections>
                 </viewController>

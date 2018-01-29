@@ -15,6 +15,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
+#import <opencv2/stitching.hpp>
+#import <opencv2/imgcodecs/ios.h>
+//#import <opencv2/opencv.hpp>
 #include <math.h>
 
 using namespace std;
@@ -73,11 +76,12 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
 //}
 
 - (bool)processImageWithCameraImage:(UIImage *)tagetImage andCurrentCoordinate:(CLLocationCoordinate2D)currentCoordinate andAltitude:(double)altitude {
+    NSLog(@"------");
     CLLocationCoordinate2D targetCoordinate = currentCoordinate;
     double targetAltitude = altitude;
     
     NSData *imData = [[NSUserDefaults standardUserDefaults] objectForKey:@"originalImage"];
-    /*
+    
     UIImage *oImage = [[UIImage alloc] initWithData:imData];
     cv::Mat matTargetImage = [OpenCVConversion cvMatFromUIImage:tagetImage];
     cv::Mat matOriginalImage = [OpenCVConversion cvMatFromUIImage:oImage];
@@ -130,7 +134,7 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
     cout<<"RPYangle is "<<RPYangle<<endl;
     cout<<"R12 is "<<R12<<endl;
     cout<<"t12 is "<<t12<<endl;
-    */
+    
     if ([self.delegate respondsToSelector:@selector(imageProcessdSuccessWithTargetCoordiante:andTargetAltitude:)]) {
         [self.delegate imageProcessdSuccessWithTargetCoordiante:targetCoordinate andTargetAltitude:targetAltitude];
     }
@@ -219,7 +223,8 @@ void find_feature_matches ( const Mat& img_1, const Mat& img_2,
     descriptor->compute ( img_2, keypoints_2, descriptors_2 );
     vector< DMatch > matches;
     
-    cv::FlannBasedMatcher matcher ( new cv::flann::LshIndexParams ( 5,10,2 ));
+//    cv::FlannBasedMatcher matcher ( new cv::flann::LshIndexParams ( 5,10,2 ));
+    BFMatcher matcher;
     matcher.match ( descriptors_1, descriptors_2, matches );
     
     double min_dis = std::min_element (

@@ -20,7 +20,7 @@
 #define weakReturn(__TARGET__) if(__TARGET__==nil)return;
 
 @interface ViewController ()<DJICameraDelegate, DJIPlaybackDelegate, DJISDKManagerDelegate, DJIFlightControllerDelegate, DJIVideoFeedListener, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageProcessingDelegate>{
-    
+    BOOL isFirstTime;
 }
 
 @property (nonatomic, assign) __block int selectedPhotoNumber;
@@ -31,6 +31,7 @@
 @property (atomic) double aircraftAltitude;
 @property (atomic) DJIGPSSignalLevel gpsSignalLevel;
 @property (atomic) double aircraftYaw;
+@property (nonatomic) ImageProcessing *imageProcess;
 
 
 @end
@@ -40,10 +41,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.title = @"MUNUAV Demo";
+    self.title = @"UAV Homing";
     self.aircraftLocation = kCLLocationCoordinate2DInvalid;
+    self.aircraftAltitude = 11.0f;
     [[VideoPreviewer instance] setView:self.fpvPreviewView];
     [self registerApp];
+    self.imageProcess = [[ImageProcessing alloc] init];
+    self.imageProcess.delegate = self;
+    isFirstTime = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -52,9 +57,9 @@
     if (camera && camera.delegate == self) {
         [camera setDelegate:nil];
     }
-    [self cleanVideoPreview];
+    //    [self cleanVideoPreview];
     
-//    captureMissionTimer = nil;
+    //    captureMissionTimer = nil;
 }
 
 - (void)registerApp {
@@ -110,8 +115,18 @@
 #pragma mark - DJIFlightControllerDelegate Method
 - (void)flightController:(DJIFlightController *_Nonnull)fc didUpdateState:(DJIFlightControllerState *_Nonnull)state {
     self.aircraftLocation = CLLocationCoordinate2DMake(state.aircraftLocation.coordinate.latitude, state.aircraftLocation.coordinate.longitude);
-    self.gpsSignalLevel = state.GPSSignalLevel;
-    self.aircraftAltitude = state.altitude;
+//    if (isFirstTime) {
+//        isFirstTime = NO;
+        [_latVLabel setText:[NSString stringWithFormat:@"%2f", state.aircraftLocation.coordinate.latitude]];
+        [_lngVLabel setText:[NSString stringWithFormat:@"%2f", state.aircraftLocation.coordinate.longitude]];
+        [_altiVLabel setText:[NSString stringWithFormat:@"%2f", state.aircraftLocation.altitude]];
+//    }
+    
+    if (state.altitude >= 30) {
+        [[self missionOperator] stopMissionWithCompletion:nil];
+    }
+//    self.gpsSignalLevel = state.GPSSignalLevel;
+//    self.aircraftAltitude = state.altitude;
     self.aircraftYaw = state.attitude.yaw;
 }
 
@@ -137,11 +152,9 @@
 }
 
 - (DJICamera*)fetchCamera {
-    
     if (![DJISDKManager product]) {
         return nil;
     }
-    
     return [DJISDKManager product].camera;
 }
 
@@ -184,7 +197,6 @@
 
 #pragma mark - Rotate Gimbal Methods
 - (void)rotateGimbal {
-    
     DJICamera *camera = [self fetchCamera];
     weakSelf(target);
     [camera setMode:DJICameraModeShootPhoto withCompletion:^(NSError * _Nullable error) {
@@ -199,7 +211,6 @@
 }
 
 - (void)executeRotateGimbal {
-    
     DJIGimbal *gimbal = [self fetchGimbal];
     __weak DJICamera *camera = [self fetchCamera];
     
@@ -251,7 +262,7 @@
         weakReturn(target);
         [target showAlertViewWithTitle:@"Capture Photos" withMessage:@"Capture finished"];
     });
-
+    
 }
 
 #pragma mark - Rotate Drone With Waypoint Mission Methods
@@ -276,31 +287,34 @@
     mission.maxFlightSpeed = 2.0;
     mission.autoFlightSpeed = 1.0;
     
-//    DJIWaypoint *wp1 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
-//    wp1.altitude = targetAltitude;
-//
-//    for (int i = 0; i < PHOTO_NUMBER ; i++) {
-//
-//        double rotateAngle = ROTATE_ANGLE*i;
-//
-//        if (rotateAngle > 180) { //Filter the angle between -180 ~ 0, 0 ~ 180
-//            rotateAngle = rotateAngle - 360;
-//        }
-//
-//        DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeShootPhoto param:0];
-//        DJIWaypointAction *action2 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeRotateAircraft param:rotateAngle];
-//        [wp1 addAction:action1];
-//        [wp1 addAction:action2];
-//    }
+    //    DJIWaypoint *wp1 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
+    //    wp1.altitude = targetAltitude;
+    //
+    //    for (int i = 0; i < PHOTO_NUMBER ; i++) {
+    //
+    //        double rotateAngle = ROTATE_ANGLE*i;
+    //
+    //        if (rotateAngle > 180) { //Filter the angle between -180 ~ 0, 0 ~ 180
+    //            rotateAngle = rotateAngle - 360;
+    //        }
+    //
+    //        DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeShootPhoto param:0];
+    //        DJIWaypointAction *action2 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeRotateAircraft param:rotateAngle];
+    //        [wp1 addAction:action1];
+    //        [wp1 addAction:action2];
+    //    }
     
     DJIWaypoint *wp1 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
-    wp1.altitude = targetAltitude + 1.0;
-    
+    wp1.altitude = 16.f;
+    DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeStay param:6000];
+    [wp1 addAction:action1];
     DJIWaypoint *wp2 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
-    wp1.altitude = targetAltitude - 1.0;
-    
+    DJIWaypointAction *action2 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeRotateGimbalPitch param:0];
+    wp2.altitude = targetAltitude;
+    [wp2 addAction:action2];
     [mission addWaypoint:wp1];
-    [mission addWaypoint:wp2];
+    [mission addWaypoint:wp2]
+    ;
     [mission setFinishedAction:DJIWaypointMissionFinishedNoAction]; //Change the default action of Go Home to None
     
     [[self missionOperator] loadMission:mission];
@@ -325,14 +339,14 @@
             [target.uploadMissionProgressAlert dismissWithClickedButtonIndex:0 animated:YES];
             target.uploadMissionProgressAlert = nil;
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Upload Mission Finished" message:nil preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *startMissionAction = [UIAlertAction actionWithTitle:@"Start Mission" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Upload Mission Finished" message:nil preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertAction *startMissionAction = [UIAlertAction actionWithTitle:@"Start Mission" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [target startWaypointMission];
-            }];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil];
-            [alert addAction:cancelAction];
-            [alert addAction:startMissionAction];
-            [target presentViewController:alert animated:YES completion:nil];
+//            }];
+//            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil];
+//            [alert addAction:cancelAction];
+//            [alert addAction:startMissionAction];
+//            [target presentViewController:alert animated:YES completion:nil];
         }
     }];
     
@@ -341,7 +355,11 @@
         if (error) {
             [target showAlertViewWithTitle:@"Mission Execution Failed" withMessage:[NSString stringWithFormat:@"%@", error.description]];
         } else {
-            [target showAlertViewWithTitle:@"Mission Execution Finished" withMessage:nil];
+//            [target showAlertViewWithTitle:@"Mission Execution Finished" withMessage:nil];
+            [_statusLabel setText:@"Mission Execution Finished"];
+            //                飞行完成后，回传新的坐标和高度值，以及图片。
+            [self imageProcessAlgorithm];
+//            [_imageProcess processImageWithCameraImage:[self imageWithView:_fpvPreviewView] andCurrentCoordinate:_aircraftLocation andAltitude:_aircraftAltitude];
         }
     }];
 }
@@ -353,8 +371,10 @@
         weakReturn(target);
         if (error) {
             NSLog(@"%@", [NSString stringWithFormat:@"Upload Mission Failed: %@", [NSString stringWithFormat:@"%@", error.description]]);
+            [_statusLabel setText:[NSString stringWithFormat:@"Upload Mission Failed: %@", [NSString stringWithFormat:@"%@", error.description]]];
         } else {
             NSLog(@"Upload Mission Finished");
+            [_statusLabel setText:@"Upload Mission Finished"];
         }
     }];
 }
@@ -363,13 +383,13 @@
     weakSelf(target);
     //Start Mission
     [[self missionOperator] startMissionWithCompletion:^(NSError * _Nullable error) {
-        
         weakReturn(target);
-        
         if (error) {
-            [target showAlertViewWithTitle:@"Start Mission Failed" withMessage:[NSString stringWithFormat:@"%@", error.description]];
+//            [target showAlertViewWithTitle:@"Start Mission Failed" withMessage:[NSString stringWithFormat:@"%@", error.description]];
+            [_statusLabel setText:@"Start Mission Failed"];
         } else {
-            [target showAlertViewWithTitle:@"Start Mission Success" withMessage:nil];
+//            [target showAlertViewWithTitle:@"Start Mission Success" withMessage:nil];
+            [_statusLabel setText:@"Start Mission Success"];
         }
     }];
 }
@@ -377,7 +397,7 @@
 #pragma mark - Select the lastest photos for Panorama
 - (void)selectPhotosForPlaybackMode {
     weakSelf(target);
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         weakReturn(target);
         DJICamera *camera = [target fetchCamera];
         [camera.playbackManager enterMultiplePreviewMode];
@@ -454,7 +474,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             target.downloadProgressAlert = nil;
             
             if (error) {
-                 [self showAlertViewWithTitle:@"Download failed" withMessage:[NSString stringWithFormat:@"%@", error.description]];
+                [self showAlertViewWithTitle:@"Download failed" withMessage:[NSString stringWithFormat:@"%@", error.description]];
             } else {
                 [self showAlertViewWithTitle:[NSString stringWithFormat:@"Download (%d/%d)", finishedFileCount, PHOTO_NUMBER] withMessage:@"download finished"];
             }
@@ -552,18 +572,109 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     }
 }
 
+#pragma mark
+#pragma mark - ImageProcessDelegate
+- (void)imageProcessdSuccessWithTargetCoordiante:(CLLocationCoordinate2D)targetCoordiante andTargetAltitude:(double)targetAltitude {
+//    [self showAlertViewWithTitle:@"Image Processed!" withMessage:@"123"];
+    [_statusLabel setText:@"Image Processed!"];
+    [_calcVLabel setText:[NSString stringWithFormat:@"Calculate Location: Lat:%2f, Lng:%2f, Alt:%2f", targetCoordiante.latitude, targetCoordiante.longitude, targetAltitude]];
+    [self rotateDroneWithWaypointMissionWithCoordinate:targetCoordiante andTargetAltitude:targetAltitude];
+}
+
+
+#pragma mark -
+#pragma mark UIImagePickerControllerDelegate methods
+#pragma mark 取到了原图和飞机图
+//完成选择图片
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
+    //加载图片
+    NSData *imageData = UIImagePNGRepresentation(image);
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:imageData forKey:@"originalImage"];
+    NSLog(@"%f", image.size.width);
+    [_captureImage setImage:image];
+    //选择框消失
+        [_captureImage setImage:image];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+//取消选择图片
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark --
+#pragma Process Image
+- (void)imageProcessAlgorithm {
+    NSLog(@"aaaaa");
+    [[self missionOperator] stopMissionWithCompletion:nil];
+    [self rotateDroneWithWaypointMissionWithCoordinate:_aircraftLocation andTargetAltitude:_aircraftAltitude];
+    [[VideoPreviewer instance] snapshotPreview:^(UIImage *snapImage){
+        NSLog(@"%f", snapImage.size.width);
+        NSLog(@"%f", snapImage.size.height);
+        UIImage *currentImage = snapImage;
+        UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+        [_imageProcess processImageWithCameraImage:currentImage andCurrentCoordinate:_aircraftLocation andAltitude:_aircraftAltitude];
+    }];
+   
+//    [self rotateDroneWithWaypointMissionWithCoordinate:_aircraftLocation andTargetAltitude:_aircraftAltitude];
+}
+
+- (void)selectPhotoFromAblum {
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    //设置图片源(相簿)
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    //设置代理
+    picker.delegate = self;
+    //设置可以编辑
+    picker.allowsEditing = YES;
+    //打开拾取器界面
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (UIImage *)imageWithView:(UIView *)view {
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size,   view.opaque, 0.0);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    NSString *msg = nil ;
+    if(error != NULL){
+        msg = @"保存图片失败" ;
+    }else{
+        msg = @"保存图片成功" ;
+    }
+}
+
 #pragma mark --
 #pragma mark Buttons Click
 - (IBAction)photoCaptureBtn:(id)sender {
-    [self rotateGimbal];
+    [self selectPhotoFromAblum];
 }
 
 - (IBAction)wayMissionBtn:(id)sender {
-     [self rotateDroneWithWaypointMissionWithCoordinate:self.aircraftLocation andTargetAltitude:self.aircraftAltitude];
+    [self imageProcessAlgorithm];
+//    [self rotateDroneWithWaypointMissionWithCoordinate:self.aircraftLocation andTargetAltitude:self.aircraftAltitude];
 }
 
 - (IBAction)rotateGimBtn:(id)sender {
-    [self rotateGimbal];
+    //    [self rotateGimbal];
+    [[self missionOperator] stopMissionWithCompletion:nil];
+}
+
+- (IBAction)captureAPhoto:(id)sender {
+    [[VideoPreviewer instance] snapshotPreview:^(UIImage *snapImage){
+        NSLog(@"%f", snapImage.size.width);
+        NSLog(@"%f", snapImage.size.height);
+        UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+        _captureImage.image = snapImage;
+    }];
+}
+
+- (IBAction)startAlgorithmBtn:(id)sender {
+    [self imageProcessAlgorithm];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -573,3 +684,5 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 
 @end
+
+

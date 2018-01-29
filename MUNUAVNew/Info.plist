@@ -45,6 +45,8 @@
 		<string>com.dji.protocol</string>
 		<string>com.dji.common</string>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

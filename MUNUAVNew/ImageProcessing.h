@@ -14,7 +14,7 @@
 
 @optional
 
-- (void)imageProcessdSuccessWithTargetCoordiante:(CLLocationCoordinate2D)targetCoordiante andTargetAltitude:(double)targetAltitude;
+- (void)imageProcessdSuccessWithTargetCoordiante:(CLLocationCoordinate2D)targetCoordiante andTargetAltitude:(double)targetAltitude andXRotateAngle:(double)xRotateAngle;
 
 @end
 

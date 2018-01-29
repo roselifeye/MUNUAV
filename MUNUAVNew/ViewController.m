@@ -286,26 +286,9 @@
     DJIMutableWaypointMission *mission = [[DJIMutableWaypointMission alloc] init];
     mission.maxFlightSpeed = 2.0;
     mission.autoFlightSpeed = 1.0;
-    
-    //    DJIWaypoint *wp1 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
-    //    wp1.altitude = targetAltitude;
-    //
-    //    for (int i = 0; i < PHOTO_NUMBER ; i++) {
-    //
-    //        double rotateAngle = ROTATE_ANGLE*i;
-    //
-    //        if (rotateAngle > 180) { //Filter the angle between -180 ~ 0, 0 ~ 180
-    //            rotateAngle = rotateAngle - 360;
-    //        }
-    //
-    //        DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeShootPhoto param:0];
-    //        DJIWaypointAction *action2 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeRotateAircraft param:rotateAngle];
-    //        [wp1 addAction:action1];
-    //        [wp1 addAction:action2];
-    //    }
-    
+
     DJIWaypoint *wp1 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
-    wp1.altitude = 16.f;
+    wp1.altitude = 15.f;
     DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeStay param:6000];
     [wp1 addAction:action1];
     DJIWaypoint *wp2 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
@@ -574,10 +557,11 @@
 
 #pragma mark
 #pragma mark - ImageProcessDelegate
-- (void)imageProcessdSuccessWithTargetCoordiante:(CLLocationCoordinate2D)targetCoordiante andTargetAltitude:(double)targetAltitude {
+- (void)imageProcessdSuccessWithTargetCoordiante:(CLLocationCoordinate2D)targetCoordiante andTargetAltitude:(double)targetAltitude andXRotateAngle:(double)xRotateAngle {
 //    [self showAlertViewWithTitle:@"Image Processed!" withMessage:@"123"];
     [_statusLabel setText:@"Image Processed!"];
     [_calcVLabel setText:[NSString stringWithFormat:@"Calculate Location: Lat:%2f, Lng:%2f, Alt:%2f", targetCoordiante.latitude, targetCoordiante.longitude, targetAltitude]];
+    [self storeGPSLocationInfoToFileWithLat:targetCoordiante.latitude andLng:targetCoordiante.longitude andAlt:targetAltitude];
     [self rotateDroneWithWaypointMissionWithCoordinate:targetCoordiante andTargetAltitude:targetAltitude];
 }
 
@@ -607,7 +591,7 @@
 - (void)imageProcessAlgorithm {
     NSLog(@"aaaaa");
     [[self missionOperator] stopMissionWithCompletion:nil];
-    [self rotateDroneWithWaypointMissionWithCoordinate:_aircraftLocation andTargetAltitude:_aircraftAltitude];
+//    [self rotateDroneWithWaypointMissionWithCoordinate:_aircraftLocation andTargetAltitude:_aircraftAltitude];
     [[VideoPreviewer instance] snapshotPreview:^(UIImage *snapImage){
         NSLog(@"%f", snapImage.size.width);
         NSLog(@"%f", snapImage.size.height);
@@ -670,11 +654,27 @@
         NSLog(@"%f", snapImage.size.height);
         UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
         _captureImage.image = snapImage;
+        
+        [self storeGPSLocationInfoToFileWithLat:[_latVLabel.text doubleValue] andLng:[_lngVLabel.text doubleValue] andAlt:[_altiVLabel.text doubleValue]];
     }];
 }
 
 - (IBAction)startAlgorithmBtn:(id)sender {
     [self imageProcessAlgorithm];
+}
+
+- (void)storeGPSLocationInfoToFileWithLat:(double)lat andLng:(double)lng andAlt:(double)alt {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    
+    NSString *fileName = @"Location.log"; // 注意不是NSData!
+    NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
+    NSString *storedStr = [NSString stringWithContentsOfFile:logFilePath encoding:NSUTF8StringEncoding error:nil];
+    if (storedStr == nil) {
+        storedStr = @"";
+    }
+    NSString *locationStr = [storedStr stringByAppendingString:[NSString stringWithFormat:@"\nLat:%f, Lng:%f, Alt:%f", lat, lng, alt]];
+    [locationStr writeToFile:logFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 - (void)didReceiveMemoryWarning {

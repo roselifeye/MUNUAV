@@ -135,8 +135,8 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
     cout<<"R12 is "<<R12<<endl;
     cout<<"t12 is "<<t12<<endl;
     
-    if ([self.delegate respondsToSelector:@selector(imageProcessdSuccessWithTargetCoordiante:andTargetAltitude:)]) {
-        [self.delegate imageProcessdSuccessWithTargetCoordiante:targetCoordinate andTargetAltitude:targetAltitude];
+    if ([self.delegate respondsToSelector:@selector(imageProcessdSuccessWithTargetCoordiante:andTargetAltitude:andXRotateAngle:)]) {
+        [self.delegate imageProcessdSuccessWithTargetCoordiante:targetCoordinate andTargetAltitude:targetAltitude andXRotateAngle:RPYangle[2]];
     }
     
     return YES;

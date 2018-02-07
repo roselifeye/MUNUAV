@@ -17,10 +17,26 @@
 
 @implementation AppDelegate
 
+- (void)redirectNSlogToDocumentFolder {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *fileName = [NSString stringWithFormat:@"NSLogOutput.log"];// 注意不是NSData!
+    NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
+    // 先删除已经存在的文件
+    NSFileManager *defaultManager = [NSFileManager defaultManager];
+    [defaultManager removeItemAtPath:logFilePath error:nil];
+    
+    // 将log输入到文件
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [Fabric with:@[[Crashlytics class]]];
+    
+    [self redirectNSlogToDocumentFolder];
     return YES;
 }
 

@@ -37,7 +37,7 @@ void pose_estimation_2d2d (
 
 const Mat K = ( Mat_<double> ( 3,3 ) << 517.306408, 0, 318.643040, 0, 516.469215, 255.313989, 0, 0, 1 );
 
-const double scaleReal = 0.2;
+const double scaleReal = 2;
 
 const double EARTH_RADIUS = 6377830;
 

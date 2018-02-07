@@ -22,9 +22,9 @@
     NSString *documentDirectory = [paths objectAtIndex:0];
     NSString *fileName = [NSString stringWithFormat:@"NSLogOutput.log"];// 注意不是NSData!
     NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
-    // 先删除已经存在的文件
-    NSFileManager *defaultManager = [NSFileManager defaultManager];
-    [defaultManager removeItemAtPath:logFilePath error:nil];
+//    // 先删除已经存在的文件
+//    NSFileManager *defaultManager = [NSFileManager defaultManager];
+//    [defaultManager removeItemAtPath:logFilePath error:nil];
     
     // 将log输入到文件
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);

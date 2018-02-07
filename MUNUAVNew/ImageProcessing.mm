@@ -232,23 +232,25 @@ void find_feature_matches ( const Mat& img_1, const Mat& img_2,
     vector< DMatch > matches;
     
 //    cv::FlannBasedMatcher matcher ( new cv::flann::LshIndexParams ( 5,10,2 ));
-    BFMatcher matcher;
+    BFMatcher matcher ( NORM_HAMMING );
     matcher.match ( descriptors_1, descriptors_2, matches );
     
-    double min_dis = std::min_element (
-                                       matches.begin(), matches.end(),
-                                       [] ( const cv::DMatch& m1, const cv::DMatch& m2 )
-                                       {
-                                           return m1.distance < m2.distance;
-                                       } )->distance;
+//    double min_dis = std::min_element (
+//                                       matches.begin(), matches.end(),
+//                                       [] ( const cv::DMatch& m1, const cv::DMatch& m2 )
+//                                       {
+//                                           return m1.distance < m2.distance;
+//                                       } )->distance;
+//    
+//    for ( DMatch &m:matches)
+//    {
+//        if (m.distance < max<double> ( min_dis*2.0, 30 ) )
+//        {
+//            good_matches.push_back ( m );
+//        }
+//    }
+    good_matches=matches;
     
-    for ( DMatch &m:matches)
-    {
-        if (m.distance < max<double> ( min_dis*2.0, 30 ) )
-        {
-            good_matches.push_back ( m );
-        }
-    }
 }
 
 void pose_estimation_2d2d (
@@ -269,6 +271,16 @@ void pose_estimation_2d2d (
     Mat essential_matrix, mask;
     essential_matrix= findEssentialMat ( points1, points2, K, RANSAC, 0.999, 1.0, mask);
     recoverPose ( essential_matrix, points1, points2, K, R, t, mask);
+    
+    vector< DMatch > matcheCH;
+    for ( size_t i=0;i<matches.size();i++)
+    {
+        if ((int)(*(mask.data+mask.step[0]*i))==1 )
+        {
+            matcheCH.push_back ( matches[i] );
+        }
+    }
+    matches=matcheCH;
 }
 
 @end

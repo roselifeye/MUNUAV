@@ -595,9 +595,13 @@
     [[VideoPreviewer instance] snapshotPreview:^(UIImage *snapImage){
         NSLog(@"%f", snapImage.size.width);
         NSLog(@"%f", snapImage.size.height);
-        UIImage *currentImage = snapImage;
-        UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-        [_imageProcess processImageWithCameraImage:currentImage andCurrentCoordinate:_aircraftLocation andAltitude:_aircraftAltitude];
+        if (0 == snapImage.size.width || 0 == snapImage.size.height) {
+            [_statusLabel setText:@"Snapshoot Failed"];
+        } else {
+            UIImage *currentImage = snapImage;
+            UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            [_imageProcess processImageWithCameraImage:currentImage andCurrentCoordinate:_aircraftLocation andAltitude:_aircraftAltitude];
+        }
     }];
    
 //    [self rotateDroneWithWaypointMissionWithCoordinate:_aircraftLocation andTargetAltitude:_aircraftAltitude];
@@ -653,10 +657,10 @@
         NSLog(@"%f", snapImage.size.width);
         NSLog(@"%f", snapImage.size.height);
         UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-        _captureImage.image = snapImage;
         NSData *imageData = UIImagePNGRepresentation(snapImage);
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:imageData forKey:@"originalImage"];
+        _captureImage.image = snapImage;
         [self storeGPSLocationInfoToFileWithLat:[_latVLabel.text doubleValue] andLng:[_lngVLabel.text doubleValue] andAlt:[_altiVLabel.text doubleValue]];
     }];
 }

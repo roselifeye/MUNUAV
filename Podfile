@@ -8,6 +8,8 @@ target 'MUNUAVNew' do
   # Pods for LYNMusicNotes
   pod 'DJI-SDK-iOS', '~> 4.4'
   pod 'OpenCV', '~> 3.0'
+  pod 'Fabric'
+  pod 'Crashlytics'
   #pod 'DJI-UILibrary-iOS', '~> 4.3'
 
 end

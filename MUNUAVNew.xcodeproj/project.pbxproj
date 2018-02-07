@@ -192,6 +192,7 @@
 				FD961E9E8885388EA5AD50A6 /* [CP] Embed Pods Frameworks */,
 				6FCEB11BE284B72939A789E0 /* [CP] Copy Pods Resources */,
 				8B98A8F1201526C700510F29 /* Embed Frameworks */,
+				8B9428DF202B731A00E186F7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -285,6 +286,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MUNUAVNew/Pods-MUNUAVNew-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8B9428DF202B731A00E186F7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" e14ee4a1db38c06cef4c03ae0aa9c7adb353740d 17d3e69a26f178953c5ad0441ef8ff3426b3ab2122d1b5e770984130956b8b7b\n";
 		};
 		E96127A98988D2B9E2FAD910 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

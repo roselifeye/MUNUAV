@@ -43,7 +43,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.title = @"UAV Homing";
     self.aircraftLocation = kCLLocationCoordinate2DInvalid;
-    self.aircraftAltitude = 11.0f;
+    self.aircraftAltitude = 15.0f;
     [[VideoPreviewer instance] setView:self.fpvPreviewView];
     [self registerApp];
     self.imageProcess = [[ImageProcessing alloc] init];
@@ -115,6 +115,7 @@
 #pragma mark - DJIFlightControllerDelegate Method
 - (void)flightController:(DJIFlightController *_Nonnull)fc didUpdateState:(DJIFlightControllerState *_Nonnull)state {
     self.aircraftLocation = CLLocationCoordinate2DMake(state.aircraftLocation.coordinate.latitude, state.aircraftLocation.coordinate.longitude);
+    self.aircraftAltitude = state.aircraftLocation.altitude;
 //    if (isFirstTime) {
 //        isFirstTime = NO;
         [_latVLabel setText:[NSString stringWithFormat:@"%2f", state.aircraftLocation.coordinate.latitude]];
@@ -289,7 +290,7 @@
 
     DJIWaypoint *wp1 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
     wp1.altitude = 15.f;
-    DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeStay param:6000];
+    DJIWaypointAction *action1 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeStay param:3000];
     [wp1 addAction:action1];
     DJIWaypoint *wp2 = [[DJIWaypoint alloc] initWithCoordinate:targetCoordinate];
     DJIWaypointAction *action2 = [[DJIWaypointAction alloc] initWithActionType:DJIWaypointActionTypeRotateGimbalPitch param:0];
@@ -589,7 +590,6 @@
 #pragma mark --
 #pragma Process Image
 - (void)imageProcessAlgorithm {
-    NSLog(@"aaaaa");
     [[self missionOperator] stopMissionWithCompletion:nil];
 //    [self rotateDroneWithWaypointMissionWithCoordinate:_aircraftLocation andTargetAltitude:_aircraftAltitude];
     [[VideoPreviewer instance] snapshotPreview:^(UIImage *snapImage){
@@ -654,7 +654,9 @@
         NSLog(@"%f", snapImage.size.height);
         UIImageWriteToSavedPhotosAlbum(snapImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
         _captureImage.image = snapImage;
-        
+        NSData *imageData = UIImagePNGRepresentation(snapImage);
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:imageData forKey:@"originalImage"];
         [self storeGPSLocationInfoToFileWithLat:[_latVLabel.text doubleValue] andLng:[_lngVLabel.text doubleValue] andAlt:[_altiVLabel.text doubleValue]];
     }];
 }

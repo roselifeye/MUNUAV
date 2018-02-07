@@ -48,7 +48,7 @@
                                     <constraint firstAttribute="height" constant="30" id="7PF-JR-azt"/>
                                     <constraint firstAttribute="width" constant="110" id="M4d-gT-nWQ"/>
                                 </constraints>
-                                <state key="normal" title="PhotoCapture" backgroundImage="buttons"/>
+                                <state key="normal" title="PhotoSelection" backgroundImage="buttons"/>
                                 <connections>
                                     <action selector="photoCaptureBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g8z-ww-VTQ"/>
                                 </connections>

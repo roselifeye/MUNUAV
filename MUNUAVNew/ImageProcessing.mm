@@ -57,10 +57,12 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
 
 @implementation ImageProcessing
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
-    self.currentCalculateTimes = 0;
-    scale = 0.f;
+    if (self) {
+        self.currentCalculateTimes = 0;
+        scale = 0.f;
+    }
     return self;
 }
 
@@ -81,7 +83,9 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
     double targetAltitude = altitude;
     
     NSData *imData = [[NSUserDefaults standardUserDefaults] objectForKey:@"originalImage"];
-    
+    if (_currentCalculateTimes == 1) {
+        imData = [[NSUserDefaults standardUserDefaults] objectForKey:@"historicalImage"];
+    }
     UIImage *oImage = [[UIImage alloc] initWithData:imData];
     cv::Mat matTargetImage = [OpenCVConversion cvMatFromUIImage:tagetImage];
     cv::Mat matOriginalImage = [OpenCVConversion cvMatFromUIImage:oImage];
@@ -112,6 +116,7 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
         //修改altitude（+/—0.2m）,经纬度不变，回传给controller
         double scaleDis = moveDistance.z;
         scale = scaleReal/scaleDis;
+        self.currentCalculateTimes++;
     } else {
         //  更新Target Coordinate and Altitude;
         
@@ -135,6 +140,9 @@ Vec3f rotationMatrixToEulerAngles(Mat &R);
     cout<<"R12 is "<<R12<<endl;
     cout<<"t12 is "<<t12<<endl;
     
+    NSData *imageData = UIImagePNGRepresentation(tagetImage);
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:imageData forKey:@"historicalImage"];
     if ([self.delegate respondsToSelector:@selector(imageProcessdSuccessWithTargetCoordiante:andTargetAltitude:andXRotateAngle:)]) {
         [self.delegate imageProcessdSuccessWithTargetCoordiante:targetCoordinate andTargetAltitude:targetAltitude andXRotateAngle:RPYangle[2]];
     }

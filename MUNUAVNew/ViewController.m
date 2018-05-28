@@ -105,6 +105,8 @@
 #pragma mark - DJIVideoFeedListener
 -(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
     [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
+    UIImage *selfMadeImage = [self imageFromVideoData:videoData];
+    NSLog(@"selfMadeImage: %f", selfMadeImage.size.width);
 }
 
 #pragma mark - DJIPlaybackDelegate
@@ -564,6 +566,27 @@
     [_calcVLabel setText:[NSString stringWithFormat:@"Calculate Location: Lat:%2f, Lng:%2f, Alt:%2f", targetCoordiante.latitude, targetCoordiante.longitude, targetAltitude]];
     [self storeGPSLocationInfoToFileWithLat:targetCoordiante.latitude andLng:targetCoordiante.longitude andAlt:targetAltitude];
     [self rotateDroneWithWaypointMissionWithCoordinate:targetCoordiante andTargetAltitude:targetAltitude];
+}
+
+- (UIImage *)imageFromVideoData:(NSData *)videoData {
+    
+    // set up the movie player
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"myMove.mp4"];
+    
+    [videoData writeToFile:path atomically:YES];
+    NSURL *urlString = [NSURL fileURLWithPath:path];
+    NSLog(@"urlString: %@", urlString);
+    NSLog(@"url: %@", videoData);
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:urlString options:nil];
+    AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    NSError *err = NULL;
+    CMTime time = CMTimeMake(1, 60);
+    CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
+    NSLog(@"err==%@, imageRef==%@", err, imgRef);
+    return [[UIImage alloc] initWithCGImage:imgRef];
+    
 }
 
 
